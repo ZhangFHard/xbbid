@@ -629,3 +629,258 @@ function u8_title_substr($str, $width = 0, $end = '...', $x3 = 0)
             $i += 3;   }    }
     return implode('', array_slice($arr, 0, $i)) . $e;
 }
+
+
+
+8.31
+客户端数据缓存
+1.config文件下config文本的内容:
+
+{
+    "session": {
+        "mode":"memcached", /* memcached,session,cookies。其中session一般情况下只适用于单服务器部署 */
+        "server":"s98.host-data.cn:11211",
+        "key":"esUnCNB6as99vt37t1GJQJT8aOXQxQW7QrtwYpaw4GB9xKETyaPFS1N4EOpK9e0O",
+        "defaulttimeout":86400,
+        "security":"aes" /* 数据安全加密方式，目前只支持aes */
+    },
+    "pageCache":{
+        "mode":"file", /* 取值范围：memcached,file */
+        "server":"s98.host-data.cn:11211",
+        "key":"ihemQsm2DQaL6v4pyMdXaHat4MFTtYyKyd9pILu7g2NbBCHRPgkKyA7E5HmIsAHT",
+        "defaulttimeout":86400,
+        "security":"" /* 数据安全加密方式，目前只支持aes */
+    }
+}
+
+2.缓存文件名及缓存地址
+入口文件index.php 添加
+define('PAGE_CACHE_DIR', './cache/');
+
+3.cache.class.php:
+<?php
+namespace Common\Util;
+class CacheManager{
+    //缓存的文件名或者键名的命名规则，是数据的名字+对应模型的名字（bs_bid_noticeBsite;bs_bid_notice是数据的名字也是模型中方法的名字，Bsite是该方法的模型）
+    private $_obj = '';
+    private $config;
+
+    //构造函数，实例化此对象时，自动执行
+    public function __construct(){
+        $config = new ConfigManager();
+        $conf = $config->config;
+
+        $pagecache = $conf->pageCache;
+
+        $mode = $pagecache->mode;
+        switch ($mode){
+            case "file":
+                require_once APP_PATH."Common/Util/Plugins/Page/File.class.php";
+                break;
+            case "memcached":
+            default:
+                require_once APP_PATH."Common/Util/Plugins/Page/Memcache.class.php";
+        }
+
+        $this->config = $conf;
+        $this->_obj = new \Common\Util\Plugins\Page\PageCache($pagecache);
+
+    }
+
+    //析构函数；当此对象被销毁时，自动执行
+    public function __destruct(){
+       $this->_obj = '';
+    }
+
+    public function encrypt($value){
+        if (!is_string($value)){
+            return $value;
+        }
+
+        $pagecache = $this->config->pageCache;
+        if ($pagecache->security != ''){
+
+            $process = new \Aes();
+            $key = $pagecache->key;
+            try {
+                $value = $process->encrypt($value, $key);
+            }catch(Exception $e){
+
+            }
+        }
+        return $value;
+    }
+
+    public function decrypt($value){
+        if (!is_string($value)){
+            return $value;
+        }
+
+        $pagecache = $this->config->pageCache;
+        if ($pagecache->security != ''){
+            $process = new \Aes();
+            $key = $pagecache->key;
+
+            $value = $process->decrypt($value, $key);
+        }
+
+        return $value;
+    }
+
+    //缓存数据
+    public function setValue5($key,$value,$time = ''){
+        $value = $this->encrypt($value);
+        return $this->_obj->setValue5($key, $value, $time);
+    }
+
+    //获取缓存(内部已判断是否过期，空或者过期将返回false)
+    public function getValue5($key){
+        if ($_GET['update'] == true){
+            return false;
+        }
+        $value = $this->_obj->getValue5($key);
+        $value = $this->decrypt($value);
+        return $value;
+    }
+
+    public function setValue($key, $value, $time){
+        $value = $this->encrypt($value);
+        return $this->_obj->setValue($key, $value, $time);
+    }
+
+    public function getValue($key){
+        if ($_GET['update'] == true){
+            return false;
+        }
+        $value = $this->_obj->getValue($key);
+        $value = $this->decrypt($value);
+        return $value;
+    }
+
+}
+
+
+file.class.php:
+
+<?php
+namespace Common\Util\Plugins\Page;
+
+class PageCache{
+    private $config;
+
+    public function __construct($config){
+        $this->config = $config;
+    }
+
+    /*
+        * 向文件中添加缓存
+        * @param $key 文件名
+        * @param $value 需要写入的内容
+        * @param $time 数据的缓存时间
+        */
+    public function setValue($key, $value, $time){
+        $key = PAGE_CACHE_DIR . $key;
+        $time = $this->getTime($time);
+        $arr = array();
+        $arr[0] = time() + $time;
+        $arr[1] = $value;
+        $arr = serialize($arr);
+        $res = file_put_contents($key, $arr);
+        return $res;
+    }
+
+    /*
+    * 从文件中取出缓存数据
+    * @param $key 需要取出数据的文件名
+     * 取出结果进行判断，存在且未过期，返回结果数组，否则返回false
+    */
+    public function getValue($key){
+        $key = PAGE_CACHE_DIR . $key;
+        $res = file_get_contents($key);
+        $res = unserialize($res);
+        $judge = $this->overTime($res);
+        if($judge){
+            return $res[1];
+        }else{
+            return $judge;
+        }
+    }
+
+    /*
+    * 对键名进行加密（采用MD5两次加密）
+    * @param $data 传递过来需要加密的键名
+    * @param $res 返回加密后的键名
+    */
+    public function getValue5($key){
+        $key = MD5($key);
+        $content = $this->getValue($key);
+        return $content;
+    }
+
+    public function setValue5($key, $content, $time){
+        $key = MD5($key);
+        $res = $this->setValue($key, $content, $time);
+        return $res;
+    }
+
+    /*
+     * 判断缓存文件是否过期
+     * @param $key 文件名
+     * @param $time 缓存的时间
+     * 当前时间减文件被修改的时间是否大于缓存时间；大于返回真；否则返回假
+     */
+    public function overTime($data){
+        $res = $data;
+        if(!empty($res) && $res[0] > time()){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
+
+    /*
+   * 根据传递过来的时间参数和单位，确定缓存的时间
+   */
+    public function getTime($time){
+        if(is_int($time)){
+            return $time;
+        }
+
+        $unit = substr($time,strlen($time)-1);
+        $num = (int)substr($time,0,strlen($time)-1);
+
+        if (!is_int($num)){
+            return $this->config->defaulttimeout;
+        }
+
+        switch($unit){
+            case 's':
+                $realtime = $num;
+                break;
+            case 'n':
+                $realtime = $num * 60;
+                break;
+            case 'h':
+                $realtime = $num * 60 * 60;
+                break;
+            case 'd':
+                $realtime = $num * 24 * 60 * 60;
+                break;
+            case 'w':
+                $realtime = $num * 7 * 24 * 60 * 60;
+                break;
+            case 'm':
+                $realtime = $num * 30 * 24 * 60 * 60;
+                break;
+            case 'y':
+                $realtime = $num * 365 * 24 * 60 * 60;
+                break;
+            default:
+                $realtime = $time;
+        }
+
+        return $realtime;
+    }
+
+}
