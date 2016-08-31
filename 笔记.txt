@@ -1,0 +1,631 @@
+5.31
+svn安装
+集成php+apache
+遇到的问题链接php
+LoadModule php5_module "D:/php/php5.3.10/php5apache2_2.dll"
+AddType application/x-httpd-php .php
+PhpIniDir "D:/php/php5.3.10" 
+php链接sqlserver 
+选择php_sqlsrv_53_ts.dll和php_pdo_sqlsrv_53_ts.dll。把文件拷贝到PHP文件夹下的ext目录下，然后在配置文件php.ini
+ 的Extensions后面加上：
+extension=php_sqlsrv_53_ts.dll
+extension=php_pdo_sqlsrv_53_ts.dl
+再重启Apache服务。
+
+
+6.1
+
+直接查看页面代码view-source:+url
+
+
+
+
+
+6.2 
+字体加粗    font-weight:bold;
+输入框圆角边   border-radius:3px;border:1px solid white;
+输入框的默认值字体颜色为灰色：
+onFocus="if(value==defaultValue){value='';this.style.color='#000'}" onBlur="if(!value){value=defaultValue; this.style.color='#999'}" style="color:#999;
+
+
+
+
+
+
+6.12
+header的作用：
+1跳转页面
+2.指定网站内容
+3.php文件写字符集转换    例子：(header('Content-Type:text/html; charset=utf-8');)
+
+
+
+
+
+
+
+
+
+
+6.13
+
+1.云打包
+
+云打包地址：http://www.yundabao.cn/
+
+云打包手册：http://www.yundabao.cn/API/YdbOnline.aspx
+
+云打包：开启右侧菜单
+	$(function(){
+		var YDB = new YDBOBJ();
+		$('#right-menu').click(function(){
+			//alert('oko');
+			 YDB.ShowTopRightMenu();
+			});
+		});
+
+
+2:切片
+
+注意：切完片保存为web所用格式
+  
+晚上： 把贪吃蛇用jequery写的抄写一遍  明天晚上回去看一遍理解思路（有时间再写一遍）；
+
+
+
+6.14
+
+6.28
+Tp里面配置路由名
+
+'URL_ROUTER_ON'   => true, //开启路由
+'URL_ROUTE_RULES' => array(
+'/^news\/web_show\_(\d+)$/' => 'index/news_detail?id=:1',    //(d+)：是数字   1：（1、 :2 的方式代表数组中第 1 个、第 2 个动态变量）
+注意：1.入口文件 index.php && 模块（zh） 不能改变
+      2.路径要区分大小写
+),
+
+
+
+
+
+
+6.15
+
+1：offset和position的区别
+offset()：
+获取匹配元素在当前视口的相对偏移。
+返回的对象包含两个整形属性：top 和 left。此方法只对可见元素有效。
+position():
+获取匹配元素相对父元素的偏移。
+返回的对象包含两个整形属性：top 和 left。为精确计算结果，请在补白、边框和填充属性上使用像素单位。此方法只对可见元素有效。
+
+
+
+1.//配置虚拟主机
+#
+NameVirtualHost *
+<VirtualHost *:80>
+    #网站目录，如果在www目录下的php目录，下面    #就填写F:/www/php
+    DocumentRoot "D:\php\apache\htdocs\first"
+    #域名
+    ServerName cs.cn
+    #这里配置欢迎首页面
+    DirectoryIndex index.html index.htm index.php
+    <Directory />
+    Options FollowSymLinks
+    #Options Indexes
+#不允许别人修改我们的页面
+#如果你在分组配置要隐藏多个入口文件尽量写成ALL 在隐藏多个入口文件时none可能会出现不能隐藏
+    AllowOverride  ALL
+    #设置访问权限
+    order allow,deny
+    Allow from all
+    </Directory>
+</VirtualHost>
+2.再修改C:\Windows\System32\drivers\etc\hosts文件里面
+添加虚拟网址
+127.0.0.1	 a.com
+注意：必须以管理员方式运行打开才可以（hosts不能直接以管理员方式运行打开，首先要选择一个编辑器以管理员方式运行再从编辑器里面选择打开hosts）
+
+
+
+
+
+//转换页面字符集编码php
+            header('Content-Type:text/html; charset=utf-8');
+cotroller
+//获取model的值
+ public function index(){
+        $res = D('Tbnews')->test();
+//       var_dump(urldecode(json_encode($res)));die;
+        if($res){
+            header('Content-Type:text/html; charset=utf-8');
+//            var_dump(U('hello'));die;//打印hello页面的路径
+         $this->success('跳转成功',U('hello'),2);//跳转hello方法
+
+           // $this->success('跳转成功','/index.php/Home/Index/hello.html',2);//直接跳转到页面
+        }else{
+            echo "no";
+        }
+        $this->show('ok');
+    }
+    public function hello(){
+        $res = "ZY";
+        $this->assign('res',$res);//assign把在model的值拿过来渲染（操作）之后再传给页面
+    $this->display();//在页面写一个与控制器相对应的文件名再在下面写一个当前方法名一样的页面名或是在display里面写你要跳转的页面名
+    }
+
+
+
+页面
+页面获取controller的值的方法
+1.{$res}
+2.<?php echo $res;?>
+
+
+6.16
+这种方法也可以求长度（这个ID里面ul有多少个li）：
+$("#ggInfo ul li").length
+
+
+鼠标移动在某一个模快某一模块的内容就显示
+//页面代码
+<td height="392" colspan="3" id="InfoDisplayArea" valign="top">
+    <div id="InfoDisplayArea1"><%call newsList(17,86,16,0,3,0,0,0,"bidlist")%></div>
+    <div id="InfoDisplayArea2" style="display:none;"><%call newsList(19,86,16,0,3,0,0,0,"bidlist")%></div>
+    <div id="InfoDisplayArea3" style="display:none;"><%call newsList(18,86,16,0,3,0,0,0,"bidlist")%></div>
+    <div id="InfoDisplayArea4" style="display:none;"><%call newsList(9,86,16,0,3,0,0,3,"bidlist")%></div>
+</td>
+
+//javascript
+var tmp_o;
+function ggInfoDisplay(o,_index){
+    var _o = document.getElementById("InfoDisplayArea" + _index);
+    for(var i=0;i<$("#ggInfo ul li").length;i++){
+        $("#ggInfo ul li")[i].className = "A";
+    }
+    o.className = "B";
+    for(var i=1;i<=4;i++){
+        document.getElementById("InfoDisplayArea" + i).style.display = "none";
+        //$("#InfoDisplayArea" + i + " .class")
+    }
+    if(_o.style.display == "none"){
+        _o.style.display = "block";
+    }else{
+        _o.style.display = "none";    }
+}
+7.1：
+空格：ie 火狐 谷歌 里面用&nbsp;不好把控（火狐里面显示的半角  而谷歌里面显示的是全角）
+半角空格&ensp;相当于半格中文字符的宽度
+全角空格&emsp;相当于一个中文字符宽度。
+
+
+
+
+
+7.4
+在要给公共字段赋值必须用 public  __construct(）{ }方法里面赋值才有效
+注意在tp3.12之后必须在方法里面先写?parent::__construct();在进行赋值不然在运行时会报错
+
+
+
+
+7.5
+^ 匹配输入字符串的开始位置。如果设置了RegExp对象的Multiline属性，^也匹配“\n”或“\r”之后的位置。?
+$ 匹配输入字符串的结束位置。如果设置了RegExp对象的Multiline属性，$也匹配“\n”或“\r”之前的位置。?
+7.7记录
+
+//二级联动
+var cityObj = $('#city');
+    $('#province').change(function(){
+      var id = $(this).val();
+      if(id == ''){
+         $('#city option').remove();
+         var option = "<option value=''>全部城市</option>";
+         cityObj.append(option);
+      }else{
+         $.post("<?php echo U('Search/getCity');?>",{provinceid :id},function(data){
+                obj=JSON.parse(data);
+            $('#city option').remove();
+            var option1 ="<option value=''>全部城市</option>";
+             cityObj.append(option1);
+            $.each(obj,function(index,value){
+               var option = "<option value="+value['id']+">"+value['0']+"</option>";     
+               cityObj.append(option);
+            });
+         })
+                  
+      }
+   });
+
+
+
+//分页
+Common/common/function.class.php定义一个方法
+function getPage($count,$pagesize)
+{
+    $page = new \Think\Page($count, $pagesize);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+    $page->setConfig('first', '首页');
+    $page->setConfig('prev', '上一页');
+    $page->setConfig('next', '下一页');
+    $page->setConfig('end', '尾页');
+    $page->setConfig('theme', '%FIRST% %UP_PAGE% %LINK_PAGE% %DOWN_PAGE%%END% 第'.I('p',1).'页/共%TOTAL_PAGE%页(50条/页,共%TOTAL_ROW%条)');
+    return $page;
+}
+
+
+//在控制器里面调用
+$count = D('Tbnews')->countNews(25);// 查询满足要求的总记录数
+$page=getPage($count,50);
+$news['ztbzl'] = D('Tbnews')->pageList($page->firstRow,$page->listRows,25,2);
+$news['show']= $page->show();// 分页显示输出// 进行分页数据查询 注意limit方法的参数要使用Page类的属性
+$this->assgin(‘gd’,$news);
+$this->display();
+
+
+
+
+
+//在模板里面
+public function pageList($firstRow,$listRows,$sort,$grade){
+    $news = M('Tbnews');
+    if($grade==2){
+        $list = $news
+            ->field('tbnews.id,tbnews.sort,tbnews.title,CONVERT(varchar(5),tbnews.edate,110) as edate,CONVERT(varchar(5),tbnews.sdate,110) as sdate,tbnews.city,b.name,c.name as cname')
+            ->join('tbareasort as b on tbnews.province= b.id','left')
+            ->join('tbareasort as c on tbnews.city = c.id','left')
+            ->where('province=3 and sort=%d',array($sort))
+            ->order('id desc')
+            ->limit($firstRow,$listRows)
+            ->select();
+    }
+Return   $list;
+
+
+
+//页面调用
+<?php echo $gd['show']; ?>
+
+
+
+
+7.8
+htmlentities跟htmlspecialchars的功能都是转换html代码格式
+htmlspecialchars如果是中文字符尽量用这个不然会出项乱码
+ 
+
+$str='<a href="test.html">测试</a>'; 
+$transstr = htmlspecialchars($str) ;
+
+
+把html代码格式转换回去
+$content= htmlspecialchars_decode($content);
+
+
+//                $('#submit').click(function() {
+//                   var username=$('#username').val();
+//                   var password=$('#password').val();
+//                   var verif=$('#verif').val();
+//                   if(username&&password&&verif){
+//                      $.post("/index.php/zh/base/isName",{username:username,password:password,verif:verif}, function (data) {
+//                         obj=JSON.parse(data);
+//                         console.log(obj);
+//                         $.each(obj,function(index,value) {
+//
+//                         }
+//
+//                            if(message=="200"){
+//                            console.log("----------- success-------------");
+//                            alert('登录成功');
+//                         }else if($data.info.message==401){
+//                            alert('用户名错误');
+//
+//                         }else if(message==402){
+//                            alert('登录密码错误');
+//
+//                         }else if($data.message==403){
+//                            alert('登录失败');
+//
+//                         }else if($data.info.message==405){
+//                            alert('验证码错误');
+//
+//                         }
+//                      });
+//
+//                   }else if(username==""){
+//                      alert("用户名不能为空");
+//                   }else if(password==""){
+//                      alert("密码不能为空");
+//
+//                   }else if(verif==""){
+//                      alert("验证码不能为空");
+//                   }else {
+//                      alert("用户名不能为空");
+//                   }
+//
+//                   });
+
+
+
+
+
+7.13
+$(".column-one-content-title[你要操作class或是div
+Foreach中包括最大div或是class]:odd[Jquery中odd判断是否是偶数如果是偶数则对它进行改变]").css("background-color","#D4E7F8");
+
+
+Jquery中odd判断是否是偶数如果是偶数则对它进行改变
+
+
+7.18
+Div:是唯一的不可以拿来做循环
+Class：不是唯一可以拿来做循环且更便利与更改样式
+
+7.21
+Form表单：
+U()方法它会默认页面后缀名 在用get传值时不建议使用
+用get传值时尽量直接写地址
+滚动插件 mcmsclass （官方地址）
+Ini_set(‘memory_limit’,’512M’);[设置放置数据的大小（直接写在php文件的头就可以）
+]
+   总结经验：model里面把所有相同的数据归类之后再写到controller
+
+7.27
+Windows里面memcached官网并没有
+一  安装memcached服务
+1.下载memcached压缩包并解压
+2.运行CMD命令提示符窗口，注意:你的系统是Windows7的话就需要以管理员身份运行。并进入到memcache.exe目录下。输入以下命令进行安装。 
+memcached -d install 
+3.启动memcached服务。 
+memcached -d start 
+4.输入以下命令来检验memcached是否安装成功并运行。 
+wmic process get description,executablepath | findstr memcached.exe 
+二、安装PHP Memcache扩展（php_memcache.dll) 
+1、如果你的PHP扩展目录还没有php_memcache.dll这个动态链接库文件的话下载，
+2、解压文件并把php_memcache.dll这个文件放到php的扩展目录里（ext目录下）
+3、编辑php.ini，添加下面一行代码到php.ini文件中。 
+extension=php_memcache.dll 
+三、测试
+<?php ?? 
+?$memcache?=?new?Memcache; ?? 
+$memcache->connect('localhost',?11211)?or?die?("Could?not?connect"); ?? 
+$version?=?$memcache->getVersion(); ?? 
+echo?"Server's?version:?".$version."<br/>\n"; ?? 
+$tmp_object?=?new?stdClass; ?? 
+$tmp_object->str_attr?=?'test'; ?? 
+$tmp_object->int_attr?=?123; ?? ?? 
+$memcache->set('key',?$tmp_object,?false,?10)?or?die?("Failed?to?save?data?at?the?server"); ?? 
+echo?"Store?data?in?the?cache?(data?will?expire?in?10?seconds)<br/>\n"; ?? 
+?$get_result?=?$memcache->get('key'); ?? 
+echo?"Data?from?the?cache:<br/>\n"; ?? ? 
+var_dump($get_result);? 
+
+8.2项目总结
+一．归纳代码
+1.控制器在一个方法多次调用应该用数组写，避免多次重复调用
+2.在model里面把相同类型归类在输出
+3.把model名与数据表名保持一致
+二．样式表
+a)每个页面尽量写一个样式表，以后查找修改等更为方便
+三．考虑值的回传
+a)如果只要从页面上再次传入页面就不从model传值直接在控制器传
+四．Mysql
+a)每个表的字段不能超过100个字段会影响数据查询速度
+
+
+8.3
+块注释并有作者参数返回值的快捷键  
+块注释：Ctrl+shift+/    结果样式：   /**/
+/** +enter键
+
+
+Js 
+改变样式
+如果改变样式只有一个时
+ **[Class 或 id 名 #（“.class”）/#(“$id”)].css(“”[样式名 例如width/color/family-size],””[样式的值 100px/red/12px]);
+多个时
+**.css{“”:””,””:””}
+
+
+
+
+8.4 
+Git 
+安装及操作git链接
+（http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/0013743256916071d599b3aed534aaab22a0db6c4e07fd0000）
+Windows 下安装
+点击链接下载https://git-for-windows.github.io 安装完成之后打开
+‘git bash’
+把用户名及邮箱写入
+Git config --global user.name ”ZhangFHard[GitHub的用户名]”
+Git config --global user.email ”1573214260@qq[GitHub的注册时您所填写的邮箱地址]”
+Git就安装完成
+由于远程库是空的，我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。
+要关联一个远程库，使用命令git remote add origin [远程库的名字]git@server-name:path/repo-name.git；
+关联后，使用命令git push -u origin master第一次推送master分支的所有内容；
+此后，每次本地提交后，只要有必要，就可以使用命令git push origin master推送最新修改；
+
+Git
+注意：所有的操作都要在有文件或有文档的情况下操作
+Mkdir  <文件名>    ：创建版本库（创建文件名）
+Cd <文件名>          ：打开版本库（打开文件名）
+Pwd                  ：查询当前文件的相对路径
+Git init              ：查询当前文件的绝对路径
+保存文件：
+Git add <文档名称>   :是把操作过的文档存到缓存区
+Git commit -m “add 文档名称[在上传时的说明]”      ：把缓存区的文档提交到分支
+Git push -u <文件名（版本库）>  mater[当前处于的分支]   ：把分支的内容提交到服务器（网上）
+完成上面这三个步骤就可以上传到网上与本地数据相同
+Git status          ：查看当前版本库里面是否有更改或是增加，删除数据操作
+Git log            ：查看提交日志的操作相关信息
+
+
+git log --pretty=oneline [让信息看得更为清晰]：
+
+
+Git返回版本  
+Git reset --hard HEAD^   ：返回上个版本（commit 过后使用）
+
+Git  reset  --hard  HEAD     ：返回当前版本
+Git reflog                    :查询操作commit每一个操作的id值
+git reset --hard 3628164[提交commit 生成的id
+查看 commit  id 操作（git  reflog）]:
+
+
+
+
+
+
+
+
+
+Git必须知道当前版本是哪个版本，在Git中，
+用HEAD表示当前版本，也就是最新的提交3628164...882e1e0（注意我的提交ID和你的肯定不一样），
+上一个版本就是HEAD^，上上一个版本就是HEAD^^，当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100。
+ 
+git diff HEAD -- readme.txt ：前一次提交与当前这次提交内容的区别
+注意：第一次修改 -> git add -> 第二次修改 -> git commit
+
+
+场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令git checkout -- file。
+场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令git reset HEAD file，就回到了场景1，第二步按场景1操作。
+场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。
+git checkout其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以“一键还原”。
+
+git checkout -- <file>  对还未存入缓存区的进行撤销一次
+
+git reset --head  <file>  撤销上一次的操作
+用VI 编辑器时下面出现这些红字，E45: 'readonly' option is set (add ! to override)
+就不让编辑了，
+输入wq! 按enter键
+:wq!
+删除文件
+Rm  <file>  :删除文件
+注意：想撤销删除文件,文件是必须执行了 commit才可以 
+
+从远程上克隆一个版本库 git clone git@github.com:ZhangFHard/xbbid
+查看分支：git branch
+创建分支：git branch <name>
+切换分支：git checkout <name>
+创建+切换分支：git checkout -b <name>
+合并某分支到当前分支：git merge <name>
+删除分支：git branch -d <name>
+用git log --graph命令可以看到分支合并图。
+$ git log --graph --pretty=oneline --abbrev-commit
+*   59bc1cb conflict fixed
+|\
+| * 75a857c AND simple
+* | 400b400 & simple
+|/
+* fec145a branch test
+
+
+
+合并分支时，加上--no-ff参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经做过合并，而fast forward合并就看不出来曾经做过合并。
+$ git merge --no-ff -m "merge with no-ff" devMerge made by the 'recursive' strategy.
+ readme.txt |    1 +
+ 1 file changed, 1 insertion(+)
+
+
+
+$ git log --graph --pretty=oneline --abbrev-commit
+*   7825a50 merge with no-ff
+|\
+| * 6224937 add merge
+|/
+*   59bc1cb conflict fixed
+...
+
+开发一个新feature，最好新建一个分支；
+如果要丢弃一个没有被合并过的分支，可以通过git branch -D[大写“D”强行删除 小写 “d”删除加入里面有值他会提醒你是否真的删除      ] <name>强行删除。
+标签  git tag v1.0[标签名]
+配置别名 ： git config --global alias.unstage 'reset HEAD'
+以后在写git reset head cs.txt 就可以直接写成 git unstage cs.txt
+
+
+
+
+8.17 sqlserver 时间比较（尽量转换为时间戳）
+//把数据库字段转换为时间戳（datediff）
+ datediff(ss,[转换成秒；（mi 转换成分；hh ：转换成小时）]'1970-01-01[起时间]',sdate[终止时间])//取两个相差的的值就是它相对应的时间再把它转换成时间戳
+
+
+
+
+
+
+8.24
+Js:
+Form 表单在提交时要想用ajax 就不能把提交按钮 的类型设为submit 应用button
+注意：如果是submit是它会直接去找form里面的action，action如果没值则会刷新页面
+
+
+
+字段截取长度
+第一种截取的不够准确（截取时数字与英文字符占位不够明确）
+第二种更为准确
+/*
+     * 意义： 判断字符串到达一定长度的时候后面用省略号代替
+      */
+function getSubStr($str, $length = 80, $Suffix = '..')
+{
+    //构建了字符串函数
+    header("content-type:text/html;charset=utf-8");
+//        $length *=2;//便于截取中文字符
+//        var_dump(strlen($str) );die;
+    if (strlen($str) <= $length) {
+        return $str;
+    } else {
+        return mb_strimwidth($str, 0, $length, $Suffix, 'utf-8');//运用了截取函数
+    }
+}
+
+
+
+
+
+
+/**
+ * 截取UTF8编码字符串从首字节开始指定宽度(非长度), 适用于字符串长度有限的如新闻标题的等宽度截取
+ * 中英文混排情况较理想. 全中文与全英文截取后对比显示宽度差异最大,且截取宽度远大越明显.
+ * @param string $str UTF-8 encoding
+ * @param int [option] $width 截取宽度
+ * @param string [option] $end 被截取后追加的尾字符
+ * @param float [option] $x3<p>
+ *  3字节（中文）字符相当于希腊字母宽度的系数coefficient（小数）
+ *  中文通常固定用宋体,根据ascii字符字体宽度设定,不同浏览器可能会有不同显示效果</p>
+ * @return string
+ */
+function u8_title_substr($str, $width = 0, $end = '...', $x3 = 0)
+{
+    global $CFG; // 全局变量保存 x3 的值
+    if ($width <= 0 || $width >= strlen($str)) {
+        return $str;    }
+    $arr = str_split($str);
+    $len = count($arr);
+    $w = 0;
+    $width *= 10;
+    // 不同字节编码字符宽度系数
+    $x1 = 11;   // ASCII
+    $x2 = 16;
+    $x3 = $x3 === 0 ? ($CFG['cf3'] > 0 ? $CFG['cf3'] * 10 : $x3 = 21) : $x3 * 10;
+    $x4 = $x3;
+    for ($i = 0; $i < $len; $i++) {
+        if ($w >= $width) {
+            $e = $end;
+            break; }
+        $c = ord($arr[$i]);
+        if ($c <= 127) {
+            $w += $x1;
+	 } elseif ($c >= 192 && $c <= 223) { // 2字节头
+            $w += $x2;
+            $i += 1;
+          } elseif ($c >= 224 && $c <= 239) { // 3字节头
+            $w += $x3;
+            $i += 2;
+         } elseif ($c >= 240 && $c <= 247) { // 4字节头
+            $w += $x4;
+            $i += 3;   }    }
+    return implode('', array_slice($arr, 0, $i)) . $e;
+}
