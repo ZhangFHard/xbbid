@@ -1,0 +1,23 @@
+{
+    "session": {
+        "mode":"memcached", /* memcached,session,cookies。其中session一般情况下只适用于单服务器部署 */
+        "server":"s98.host-data.cn:11211",
+        "key":"esUnCNB6as99vt37t1GJQJT8aOXQxQW7QrtwYpaw4GB9xKETyaPFS1N4EOpK9e0O",
+        "defaulttimeout":86400,
+        "security":"aes" ,/* 数据安全加密方式，目前只支持aes */
+        "session_keyStr":"jfcIU8QpdjUq4J0u"               /*用户登录时key的秘钥（后面粘的字符串）*/
+    },
+    "pageCache":{
+        "mode":"file", /* 取值范围：memcached,file */
+        "server":"s98.host-data.cn:11211",
+        "key":"ihemQsm2DQaL6v4pyMdXaHat4MFTtYyKyd9pILu7g2NbBCHRPgkKyA7E5HmIsAHT",
+        "defaulttimeout":86400,
+        "security":"" /* 数据安全加密方式，目前只支持aes */
+    },
+
+    "staticUrl":{
+         "csspath": "http://statics.data-data.cn/scbidcom/skins/",
+         "jspath": "http://statics.data-data.cn/scbidcom/js/",
+         "defrespath": "http://r.c00.scbid.com/"
+    }
+}

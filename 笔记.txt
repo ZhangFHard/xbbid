@@ -9,7 +9,7 @@ php链接sqlserver
 选择php_sqlsrv_53_ts.dll和php_pdo_sqlsrv_53_ts.dll。把文件拷贝到PHP文件夹下的ext目录下，然后在配置文件php.ini
  的Extensions后面加上：
 extension=php_sqlsrv_53_ts.dll
-extension=php_pdo_sqlsrv_53_ts.dl
+extension=php_pdo_sqlsrv_53_ts.dll
 再重启Apache服务。
 
 

@@ -1,0 +1,27 @@
+{
+    "session": "session", /* memcached,session,cookies。其中session一般情况下只适用于单服务器部署 */
+    "sessionMemcachedServer": "s02.data-data.cn:11211",
+    
+    "pageCache": "file", /* 取值范围：memcached,file,application推荐使用file */
+    "pageCacheMemcachedServer": "s02.data-data.cn:11211",
+    
+    "csspath": "http://statics.data-data.cn/scbidcom/skins/",
+    "jspath": "http://statics.data-data.cn/scbidcom/js/",
+    "defrespath": "http://r.c00.scbid.com/",
+    
+    "staticConfig": "/cache/config/", /* 静态文件地址 */
+    "cache": "/cache/zh/", /* 信息缓存基础路径 */
+    
+    "cacheBidding": "/cache/zh/bidding/", /* 招标信息缓存 */
+    "cacheZb": "/cache/zh/zb/", /* 中标信息缓存 */
+    "cacheNews": "/cache/zh/news/", /* 新闻类信息缓存 */
+    "cacheProduct": "/cache/zh/product/", /* 产品缓存 */
+    "cacheWeb": "/cache/zh/web/", /* WEB单页面缓存 */
+    "cacheMember": "/cache/zh/member/", /* 会员类信息缓存 */
+    "cacheCount": "/cache/zh/count/", /* 统计类信息缓存 */
+    "cacheCommon": "/cache/zh/common/", /* 通用信息缓存 */
+    "cacheDetail": "/cache/zh/detail/", /*  */
+    "cacheAd": "/cache/zh/advertising/", /*  */
+    "cacheDownload": "/cache/zh/download/", /*  */
+    "cacheSearch": "/cache/zh/search/", /*  */
+}
