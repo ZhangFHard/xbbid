@@ -1,9 +1,0 @@
-this is test
-branch new one  dev
-<<<<<<< HEAD
-Creating a new branch is quick & simple.
-=======
-Creating a new branch is quick AND simple.
->>>>>>> feature1
-add issue-101
-
