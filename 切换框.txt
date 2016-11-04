@@ -1,0 +1,27 @@
+
+1.js
+function setTab(m,n){
+	var tli=document.getElementById("tab"+m).getElementsByTagName("li");
+	var mli=document.getElementById("tabmain"+m).getElementsByTagName("p");
+	for(i=0;i<tli.length;i++){
+	tli[i].className=i==n?"hover":"";
+	mli[i].style.display=i==n?"block":"none";
+	}
+}
+2.使用
+ <ul id="tab2" class="">//id值：对应var tli 中byid("tab"+'m')
+                        <li class="hover " style="float: left"//li标签及默认有class的值都设置一个样式；样式float：left是为了不让li换行
+                            onMouseOver="setTab(2,0)"><?php echo $gd['column'][1];?></li>//onmouseover中的值setTab对应方法（setTab括号里面的对应是m,n）
+                        <li style="float: left"
+                            onMouseOver="setTab(2,1)"><?php echo $gd['column'][2];?></li>
+                    </ul>
+		<div id="tabmain2">//切换内容：注意p标签下面不能div进行分块（div分块他会跳出p标签使切换内容无效）尽量用span分块
+                    <p style="display: block">
+                       1122
+                    </p>
+                    <p style="display:none;">
+			1225585
+                      
+                    </p>
+
+                </div>
