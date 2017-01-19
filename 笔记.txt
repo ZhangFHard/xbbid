@@ -891,3 +891,12 @@ jquery:在传值时最后一个不加逗号
 11.1
 php
 array_merge()函数：把所有数组的值统计在一起（例如你在第一个地方要用data这个数组后面还有地方要继续使用data这个数组存储就可以使用此函数）
+
+
+2017.1.4
+sql:字符串为空时 字段名 is null ;不为空时：is not null
+2.17.1.19
+手机自适应式：
+1.html标签修改成：
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+2.单位尽量用 rem
