@@ -895,8 +895,16 @@ array_merge()º¯Êı£º°ÑËùÓĞÊı×éµÄÖµÍ³¼ÆÔÚÒ»Æğ£¨ÀıÈçÄãÔÚµÚÒ»¸öµØ·½ÒªÓÃdataÕâ¸öÊı×éº
 
 2017.1.4
 sql:×Ö·û´®Îª¿ÕÊ± ×Ö¶ÎÃû is null ;²»Îª¿ÕÊ±£ºis not null
-2.17.1.19
+2017.1.19
 ÊÖ»ú×ÔÊÊÓ¦Ê½£º
 1.html±êÇ©ĞŞ¸Ä³É£º
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 2.µ¥Î»¾¡Á¿ÓÃ rem
+2017-2-4
+ifÓëswitchÌõ¼şÅĞ¶ÏµÄ¸÷×ÔÓÅÊÆ
+switch£ºÔÚ¹Ì¶¨ÖµÊ±£¬ÔËĞĞËÙ¶È½Ï¿ì£»ÔÚ¿´ÅĞ¶ÏÌõ¼ş¸üÎªÇåÎú£»Óï¾ä¸üÎª¼òµ¥£»¸üÈİÒ×°ÑËùÓĞÌõ¼ş°üÀ¨
+if:ÔÚÖµÊÇ»î¶¯ÖµÊ±£¬¸üÎªÃ÷È·
+2017.2.8
+phpÔÚÊı×éÖĞÌí¼ÓÔªËØarray_push($arr,$val...)ÔÚÄ©Î²Ìí¼ÓºÍarray_unshift($arr,$val..)ÔÚ¿ªÍ·Ìí¼ÓÊı¾İ
+×¢£º$arr:±ØĞëÊÇÊı×é»ò¶¨ÒåÎªÊı×é£»$val:¸ù¾İ$arrµÄÊı¾İ½øĞĞ¸³Öµ£¨$val£º$val=array("enabled"=>'','name'=>'È«²¿','id'=>'','code'=>'','parentcode'=>'','sorted'=>''»ò$val='È«²¿');
+£©
