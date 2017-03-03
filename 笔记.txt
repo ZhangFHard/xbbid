@@ -908,3 +908,9 @@ if:在值是活动值时，更为明确
 php在数组中添加元素array_push($arr,$val...)在末尾添加和array_unshift($arr,$val..)在开头添加数据
 注：$arr:必须是数组或定义为数组；$val:根据$arr的数据进行赋值（$val：$val=array("enabled"=>'','name'=>'全部','id'=>'','code'=>'','parentcode'=>'','sorted'=>''或$val='全部');
 ）
+2017-3-3
+1.html_entity_decode（）：编辑器存储时会带html标签html_entity_decode()就会把它以html格式显示
+2. 遍历ul下面所有li并取值：    
+ $("#selectAlladmin li").each(function(){
+              oldsa+=$(this).val()+""
+          });
